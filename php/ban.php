@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
+if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] != 'admin') {
     die("Accès refusé");
 }
 
@@ -15,15 +15,12 @@ if (isset($_GET['id']) && isset($_GET['action'])) {
         die("Action invalide");
     }
     
-    $value = ($action === 'ban') ? 1 : 0;
+    $statut = ($action === 'ban') ? 'banni' : 'actif';
     
     // Mettre à jour le statut de bannissement
-    $sql = "UPDATE users SET banni = :value WHERE id = :id";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([
-        'value' => $value,
-        'id' => $id
-    ]);
+    $result = $api_client->put('users', [
+        'statut_compte' => $statut
+    ], ['id' => $id]);
     
     // Rediriger vers la page principale
     header("Location: backoffice.php");

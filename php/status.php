@@ -1,36 +1,24 @@
 <?php
 session_start();
-if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
+if (!isset($_SESSION['type_utilisateur']) || $_SESSION['type_utilisateur'] != 'admin') {
     die("Accès refusé");
 }
 
 include 'db.php';
 
-if (isset($_GET['id']) && isset($_GET['type']) && isset($_GET['action'])) {
+if (isset($_GET['id']) && isset($_GET['type'])) {
     $id = (int)$_GET['id'];
     $type = $_GET['type'];
-    $action = $_GET['action'];
     
     // Vérifier que le type est valide
-    if ($type !== 'livreur' && $type !== 'prestataire') {
+    if (!in_array($type, ['admin', 'livreur', 'prestataire', 'commercant', 'client'])) {
         die("Type invalide");
     }
     
-    // Vérifier que l'action est valide
-    if ($action !== 'add' && $action !== 'remove') {
-        die("Action invalide");
-    }
-    
-    $column = "is_" . $type;
-    $value = ($action === 'add') ? 1 : 0;
-    
-    // Mettre à jour le statut
-    $sql = "UPDATE users SET $column = :value WHERE id = :id";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([
-        'value' => $value,
-        'id' => $id
-    ]);
+    // Mettre à jour le type d'utilisateur via l'API
+    $result = $api_client->put('users', [
+        'type_utilisateur' => $type
+    ], ['id' => $id]);
     
     // Rediriger vers la page principale
     header("Location: backoffice.php");
