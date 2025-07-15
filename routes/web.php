@@ -124,6 +124,8 @@ Route::post('/panier/supprimer/{id}', [App\Http\Controllers\PanierController::cl
 Route::get('/panier/paiement', [App\Http\Controllers\PanierController::class, 'paiement'])->name('panier.paiement');
 Route::post('/panier/payer', [App\Http\Controllers\PanierController::class, 'payer'])->name('panier.payer');
 Route::post('/panier/payment-intent', [App\Http\Controllers\PanierController::class, 'createPaymentIntent'])->name('panier.payment_intent');
+Route::get('/panier/stripe', [App\Http\Controllers\PanierController::class, 'stripePayer'])->name('panier.stripe_payer');
+Route::get('/panier/stripe/success', [App\Http\Controllers\PanierController::class, 'stripeSuccess'])->name('panier.stripe_success');
 
 Route::get('/livreur/deplacements', [App\Http\Controllers\LivreurController::class, 'deplacements'])->name('livreur.deplacements');
 Route::get('/livreur/deplacement/{id}/livraisons', [App\Http\Controllers\LivreurController::class, 'livraisonsPourDeplacement'])->name('livreur.deplacement.livraisons');

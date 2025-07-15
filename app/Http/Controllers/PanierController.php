@@ -125,4 +125,89 @@ class PanierController extends Controller
         ]);
         return response()->json(['clientSecret' => $intent->client_secret]);
     }
+
+    public function stripePayer()
+    {
+        $panier = session('panier', []);
+        $total = collect($panier)->sum(function($item) { return $item['prix'] * $item['quantite']; });
+
+        \Stripe\Stripe::setApiKey(config('stripe.secret'));
+        $session = \Stripe\Checkout\Session::create([
+            'payment_method_types' => ['card'],
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'eur',
+                    'product_data' => [
+                        'name' => 'Paiement Panier EcoDeli',
+                    ],
+                    'unit_amount' => intval($total * 100),
+                ],
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'success_url' => route('panier.stripe_success', [], true) . '?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => route('panier.afficher'),
+        ]);
+
+        return view('panier.stripe_paiement', [
+            'sessionId' => $session->id,
+            'publicKey' => config('stripe.key'),
+            'panier' => $panier,
+            'total' => $total,
+        ]);
+    }
+
+    public function stripeSuccess(Request $request)
+    {
+        $panier = session('panier', []);
+        $total = collect($panier)->sum(function($item) { return $item['prix'] * $item['quantite']; });
+        $contenu = collect($panier)->map(function($item) {
+            return $item['quantite'] . 'x ' . $item['nom'];
+        })->implode(', ');
+
+        $session_id = $request->query('session_id');
+        \Stripe\Stripe::setApiKey(config('stripe.secret'));
+        $session = \Stripe\Checkout\Session::retrieve($session_id);
+
+        if ($session->payment_status === 'paid') {
+            // Paiement
+            \App\Models\Paiement::create([
+                'id_utilisateur' => auth()->user()->id_utilisateur ?? auth()->id(),
+                'montant' => $total,
+                'date' => now(),
+                'methode' => 'stripe',
+                'statut' => 'validé',
+                'info' => $contenu,
+            ]);
+            // Livraison (reprend la logique précédente pour les adresses)
+            $user = auth()->user();
+            $id_utilisateur = $user->id_utilisateur ?? $user->id;
+            $id_adresse_arrivee = $user->adresse ?? null;
+            $premierProduit = reset($panier);
+            $produit = \App\Models\Produit::find($premierProduit['id']);
+            $id_commercant = $produit->id_commercant ?? null;
+            $commercant = \App\Models\Commercant::find($id_commercant);
+            $id_adresse_depart = $commercant->adresse ?? null;
+            \App\Models\Livraison::create([
+                'id_utilisateur' => $id_utilisateur,
+                'id_livreur' => null,
+                'id_annonce' => null,
+                'id_adresse_depart' => $id_adresse_depart,
+                'id_adresse_arrivee' => $id_adresse_arrivee,
+                'date_livraison' => now()->addDays(2),
+                'code_validation' => strtoupper(\Illuminate\Support\Str::random(8)),
+                'poids' => 0,
+                'fragile' => 0,
+                'statut' => 'en_attente',
+                'contenu' => $contenu,
+                'date' => now(),
+                'modalite' => 'Panier',
+                'type' => 'panier',
+            ]);
+            session()->forget('panier');
+            return redirect()->route('panier.afficher')->with('success', 'Paiement effectué, livraison créée !');
+        } else {
+            return redirect()->route('panier.afficher')->with('error', 'Paiement non validé.');
+        }
+    }
 } 
