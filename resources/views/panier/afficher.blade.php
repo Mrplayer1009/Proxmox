@@ -39,7 +39,7 @@
             <span class="font-bold text-lg">Total : {{ number_format($total, 2) }} €</span>
         </div>
         <div class="text-right">
-            <a href="{{ route('panier.paiement') }}" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">Payer</a>
+            <a href="{{ route('panier.stripe_payer') }}" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">Payer</a>
         </div>
     @endif
 </div>
