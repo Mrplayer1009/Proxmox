@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+@include('layouts.navbar')
 <div class="container mx-auto max-w-2xl py-8">
     <h2 class="text-2xl font-bold mb-6">Mon abonnement</h2>
     @if(session('success'))

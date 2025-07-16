@@ -18,14 +18,15 @@ class ClientController extends Controller
 
     public function createAnnonce()
     {
-        return view('client.create_annonce');
+        $batiments = \App\Models\Batiment::with('addresse')->get();
+        return view('client.create_annonce', compact('batiments'));
     }
 
     public function storeAnnonce(Request $request)
     {
         $data = $request->validate([
             'titre' => 'required|string|max:255',
-            'ville_depart' => 'required|string|max:255',
+            'id_addresse' => 'required|numeric',
             'poids' => 'required|numeric|min:0',
             'fragile' => 'nullable|boolean',
             'description' => 'required|string',
@@ -34,14 +35,16 @@ class ClientController extends Controller
             'type_colis' => 'required|in:Alimentaire,Meuble,Colis',
             'nombre' => 'required|integer|min:1',
         ]);
-        $data['id_utilisateur'] = Auth::id();
+        $data['id_utilisateur'] = auth()->id();
         $data['statut'] = 'en_cours';
-        $data['fragile'] = ($request->input('poids', 0) > 0 && $request->has('fragile')) ? 1 : 0;
+        $data['fragile'] = $request->input('fragile', 0);
         if (empty($data['date_limite'])) {
             $data['date_limite'] = null;
         }
-        // Les champs non utilisés dans la table sont ignorés automatiquement
-        Annonce::create($data);
+        // On récupère l'id
+        $data['id_addresse'] = $request->input('id_addresse');
+        //dd($data); // décommenter pour debug si besoin
+        \App\Models\Annonce::create($data);
         return redirect()->route('client.annonces')->with('success', 'Annonce créée !');
     }
 

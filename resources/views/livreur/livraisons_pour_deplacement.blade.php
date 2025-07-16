@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+@include('layouts.navbar')
 <div class="container mx-auto py-8">
     <h2 class="text-2xl font-bold mb-6">Livraisons pour le déplacement vers {{ $deplacement->lieu_arrivee }}</h2>
     <table class="min-w-full bg-white rounded shadow">

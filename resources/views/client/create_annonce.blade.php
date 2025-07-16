@@ -9,8 +9,13 @@
             <input type="text" name="titre" id="titre" value="{{ old('titre') }}" required>
         </div>
         <div>
-            <label for="ville_depart">Ville</label>
-            <input type="text" name="ville_depart" id="ville_depart" value="{{ old('ville_depart') }}" required>
+            <label for="id_addresse">Bâtiment de départ</label>
+            <select name="id_addresse" id="id_addresse" required>
+                <option value="">-- Sélectionner --</option>
+                @foreach($batiments as $batiment)
+                    <option value="{{ $batiment->id_addresse }}">{{ $batiment->nom }} @if($batiment->addresse) - {{ $batiment->addresse->adresse }} @endif</option>
+                @endforeach
+            </select>
         </div>
         <div>
             <label for="poids">Poids (kg)</label>

@@ -14,15 +14,15 @@ class Annonce extends Model
     protected $fillable = [
         'id_utilisateur',
         'titre',
-        'ville_depart',
-        'description',
+        'id_addresse',
+        'nombre',
         'poids',
         'fragile',
+        'description',
         'prix',
         'statut',
         'date_limite',
         'type_colis',
-        'nombre',
     ];
 
     public function utilisateur()

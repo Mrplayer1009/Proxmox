@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+@include('layouts.navbar')
 <div class="container mx-auto py-8 max-w-lg">
     <h2 class="text-2xl font-bold mb-6">Noter la prestation</h2>
     <form method="POST" action="{{ route('client.reservation.noter.submit', $reservation->id_reservation) }}">

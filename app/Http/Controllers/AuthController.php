@@ -49,7 +49,7 @@ public function login(Request $request)
         ]);
         $data['password'] = Hash::make($data['password']);
         $user = Utilisateur::create($data);
-        // Création de l'adresse liée
+        // Créé l'addresse avec les info
         \App\Models\Addresse::create([
             'rue' => $data['rue'],
             'ville' => $data['ville'],

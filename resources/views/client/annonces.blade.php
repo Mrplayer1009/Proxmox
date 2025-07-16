@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+@include('layouts.navbar')
 <div class="container">
     <h2>Mes annonces</h2>
     <a href="{{ route('client.annonces.create') }}" class="button">Créer une annonce</a>

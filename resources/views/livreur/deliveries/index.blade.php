@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@include('layouts.navbar')
 <div class="container mx-auto p-4">
     <div class="flex justify-end mb-4">
         <a href="{{ route('livreur.deliveries.prendre_liste') }}" class="bg-orange-500 text-black px-4 py-2 rounded hover:bg-orange-600 transition">Prendre une livraison en attente</a>

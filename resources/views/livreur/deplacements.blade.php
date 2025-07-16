@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+@include('layouts.navbar')
 <div class="container mx-auto py-8">
     <a href="{{ route('livreur.deplacement.create') }}" class="bg-green-600 text-white px-4 py-2 rounded mb-4 inline-block">Ajouter un déplacement</a>
     <h2 class="text-2xl font-bold mb-6">Mes déplacements</h2>

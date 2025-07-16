@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+@include('layouts.navbar')
 <div class="container max-w-lg mx-auto py-8">
     <h2 class="text-2xl font-bold mb-6">Créer un contrat</h2>
     <form action="{{ route('commercant.contrat.store', $commercant->id_commercant) }}" method="POST" enctype="multipart/form-data">

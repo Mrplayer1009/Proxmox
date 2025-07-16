@@ -28,9 +28,7 @@
         <hr>
         <div class="mt-4">
             <h4>Validation du profil et des prestations</h4>
-            <p>Votre profil et vos habilitations sont vérifiés par EcoDeli avant validation. Les types de prestations et tarifs pratiqués sont contrôlés. Les tarifs sont fixés ou négociés avec EcoDeli.</p>
-            <p><em>(Section à compléter avec la gestion des habilitations et des types de prestations)</em></p>
-        </div>
+            <p>Votre profil et vos habilitations sont vérifiés par EcoDeli avant validation.</p>
         <hr>
         <div class="mt-4">
             <h4>Calendrier de vos disponibilités</h4>

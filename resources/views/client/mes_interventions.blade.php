@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+@include('layouts.navbar')
 <div class="container mx-auto py-8">
     <h2 class="text-2xl font-bold mb-6">Mes interventions réservées</h2>
     @if($reservations->isEmpty())
@@ -38,7 +39,7 @@
                                 @if($reservation->note)
                                     <span class="text-green-700 font-semibold">Merci de votre retour</span>
                                 @else
-                                    <a href="{{ route('client.reservation.noter', $reservation->id_reservation) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-3 rounded">Noter</a>
+                                    <a href="{{ route('client.reservation.noter', $reservation->id_reservation) }}" class="bg-yellow-500 hover:bg-yellow-600 text-blue font-bold py-1 px-3 rounded">Noter</a>
                                 @endif
                             @endif
                         </td>

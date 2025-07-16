@@ -10,11 +10,13 @@ class PrestataireController extends Controller
 {
     public function dashboard()
     {
-        $userId = Auth::id();
+        $userId = \Auth::id();
         $prestataire = \App\Models\Prestataire::where('id_utilisateur', $userId)->first();
         $noteMoyenne = null;
         if ($prestataire) {
-            $noteMoyenne = $prestataire->evaluations()->avg('note');
+            $noteMoyenne = \App\Models\Reservation::where('id_prestataire', $prestataire->id_prestataire)
+                ->whereNotNull('note')
+                ->avg('note');
         }
         return view('prestataire.dashboard', compact('prestataire', 'noteMoyenne'));
     }
