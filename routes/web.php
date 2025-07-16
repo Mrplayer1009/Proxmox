@@ -152,3 +152,10 @@ Route::post('/prestataire/annonce-prestation', [App\Http\Controllers\AnnoncePres
 Route::get('/annonces/prestations/{id}/prendre', [App\Http\Controllers\AnnoncePrestationController::class, 'prendre'])->name('annonces.prestations.prendre');
 Route::post('/annonces/prestations/{id}/payer', [App\Http\Controllers\AnnoncePrestationController::class, 'payer'])->name('annonces.prestations.payer');
 Route::get('/annonces/prestations/{reservation}/success', [App\Http\Controllers\AnnoncePrestationController::class, 'success'])->name('annonces.prestations.success');
+
+// Espace client : interventions
+Route::get('/client/interventions', [App\Http\Controllers\ClientController::class, 'mesInterventions'])->name('client.interventions');
+Route::post('/client/reservation/{id}/annuler', [App\Http\Controllers\ClientController::class, 'annulerReservation'])->name('client.reservation.annuler');
+Route::post('/client/reservation/{id}/valider', [App\Http\Controllers\ClientController::class, 'validerReservation'])->name('client.reservation.valider');
+Route::get('/client/reservation/{id}/noter', [App\Http\Controllers\ClientController::class, 'noterReservationForm'])->name('client.reservation.noter');
+Route::post('/client/reservation/{id}/noter', [App\Http\Controllers\ClientController::class, 'noterReservation'])->name('client.reservation.noter.submit');

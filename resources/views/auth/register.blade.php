@@ -46,20 +46,13 @@
             <input type="text" name="code_postal" id="code_postal" class="w-full border rounded px-3 py-2" required>
         </div>
         <div>
-            <label for="adresse">Adresse</label>
-            <textarea name="adresse" id="adresse">{{ old('adresse') }}</textarea>
-            @error('adresse')<div>{{ $message }}</div>@enderror
-        </div>
-        <div>
             <label for="type_utilisateur">Type d'utilisateur</label>
             <select name="type_utilisateur" id="type_utilisateur" required>
                 <option value="">Sélectionner</option>
                 <option value="client" @if(old('type_utilisateur')=='client') selected @endif>Client</option>
                 <option value="commercant" @if(old('type_utilisateur')=='commercant') selected @endif>Commerçant</option>
                 <option value="livreur" @if(old('type_utilisateur')=='livreur') selected @endif>Livreur</option>
-                <option value="prestataire" @if(old('type_utilisateur')=='prestataire') selected @endif>Prestataire</option>
-                <option value="admin" @if(old('type_utilisateur')=='admin') selected @endif>Admin</option>
-            </select>
+                <option value="prestataire" @if(old('type_utilisateur')=='prestataire') selected @endif>Prestataire</option>            </select>
             @error('type_utilisateur')<div>{{ $message }}</div>@enderror
         </div>
         <button type="submit">S'inscrire</button>

@@ -111,4 +111,62 @@ class ClientController extends Controller
         $annonce->save();
         return back()->with('success', 'Stock mis à jour.');
     }
+
+    public function mesInterventions()
+    {
+        $user = auth()->user();
+        $reservations = \App\Models\Reservation::where('id_client', $user->id_utilisateur ?? $user->id)->with(['prestation'])->latest()->get();
+        return view('client.mes_interventions', compact('reservations'));
+    }
+
+    public function annulerReservation($id)
+    {
+        $reservation = \App\Models\Reservation::findOrFail($id);
+        $user = auth()->user();
+        if ($reservation->id_client != ($user->id_utilisateur ?? $user->id)) {
+            abort(403);
+        }
+        $reservation->statut = 'annulée';
+        $reservation->save();
+        return back()->with('success', 'Réservation annulée.');
+    }
+
+    public function validerReservation($id)
+    {
+        $reservation = \App\Models\Reservation::findOrFail($id);
+        $user = auth()->user();
+        if ($reservation->id_client != ($user->id_utilisateur ?? $user->id)) {
+            abort(403);
+        }
+        $reservation->statut = 'validée';
+        $reservation->save();
+        return back()->with('success', 'Réservation validée. Vous pouvez maintenant laisser une note.');
+    }
+
+    public function noterReservationForm($id)
+    {
+        $reservation = \App\Models\Reservation::findOrFail($id);
+        $user = auth()->user();
+        if ($reservation->id_client != ($user->id_utilisateur ?? $user->id) || $reservation->statut !== 'validée') {
+            abort(403);
+        }
+        return view('client.noter_reservation', compact('reservation'));
+    }
+
+    public function noterReservation(\Illuminate\Http\Request $request, $id)
+    {
+        $reservation = \App\Models\Reservation::findOrFail($id);
+        $user = auth()->user();
+        if ($reservation->id_client != ($user->id_utilisateur ?? $user->id) || $reservation->statut !== 'validée') {
+            abort(403);
+        }
+        $request->validate([
+            'note' => 'required|integer|min:1|max:5',
+            'commentaire' => 'nullable|string|max:500',
+        ]);
+        $reservation->note = $request->note;
+        $reservation->commentaire = $request->commentaire;
+        $reservation->save();
+        return redirect()->route('client.interventions')->with('success', 'Merci pour votre note !');
+    }
 } 

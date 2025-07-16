@@ -55,7 +55,6 @@ class AnnoncePrestationController extends Controller
             'heures' => 'required|integer|min:1',
         ]);
         $user = auth()->user();
-        $prixTotal = $annonce->prix * $request->heures;
 
         // Calcul heure_debut et heure_fin (heure_debut = 09:00, heure_fin = heure_debut + nb heures)
         $heureDebut = '09:00:00';
@@ -63,7 +62,7 @@ class AnnoncePrestationController extends Controller
 
         // Création de la réservation
         $reservation = new \App\Models\Reservation();
-        $reservation->id_prestation = $annonce->id_annonce_prestation; // ou id_prestation si tu veux lier à une vraie prestation
+        $reservation->id_prestation = $annonce->id_annonce_prestation;
         $reservation->id_client = $user->id_utilisateur ?? $user->id;
         $reservation->date = $request->date;
         $reservation->heure_debut = $heureDebut;
@@ -71,30 +70,7 @@ class AnnoncePrestationController extends Controller
         $reservation->statut = 'en_attente';
         $reservation->save();
 
-        // Stripe Checkout
-        \Stripe\Stripe::setApiKey(config('stripe.secret'));
-        $session = \Stripe\Checkout\Session::create([
-            'payment_method_types' => ['card'],
-            'line_items' => [[
-                'price_data' => [
-                    'currency' => 'eur',
-                    'product_data' => [
-                        'name' => $annonce->titre,
-                    ],
-                    'unit_amount' => intval($prixTotal * 100),
-                ],
-                'quantity' => 1,
-            ]],
-            'mode' => 'payment',
-            'success_url' => route('annonces.prestations.success', ['reservation' => $reservation->id_reservation], true) . '?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => route('annonces.prestations.prendre', $annonce->id_annonce_prestation),
-        ]);
-
-        // Stocker l'id de session Stripe dans la réservation pour vérification après paiement
-        $reservation->stripe_session_id = $session->id;
-        $reservation->save();
-
-        return redirect($session->url);
+        return redirect()->route('annonces.prestations')->with('success', 'Réservation enregistrée !');
     }
 
     public function success(\Illuminate\Http\Request $request, $reservationId)

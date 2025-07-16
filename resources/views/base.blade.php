@@ -70,7 +70,7 @@
         </ul>
         <div class="mt-8 text-center">
             <span class="text-gray-500">Connecté en tant que :</span>
-            <span class="font-semibold text-orange-600">{{ $user->prenom ?? '' }} {{ $user->nom ?? '' }} (Invité)</span>
+            <span class="font-semibold text-orange-600">{{ $user->prenom ?? '' }} {{ $user->nom ?? '' }}</span>
         </div>
         @if($user && $user->type_utilisateur === 'admin')
             <div class="mt-6 text-center">

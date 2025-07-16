@@ -7,6 +7,7 @@
         <a href="{{ route('client.annonces.create') }}" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded transition">Créer une annonce</a>
         <a href="{{ route('client.annonces') }}" class="bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold py-2 px-4 rounded transition">Voir mes annonces</a>
         <a href="{{ route('client.paiements') }}" class="bg-green-100 hover:bg-green-200 text-green-700 font-semibold py-2 px-4 rounded transition">Mes paiements</a>
+        <a href="{{ route('client.interventions') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded block mb-4">Mes interventions</a>
     </div>
 </div>
 @endsection 
