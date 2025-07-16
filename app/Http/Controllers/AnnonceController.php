@@ -12,6 +12,7 @@ use Stripe\Checkout\Session as StripeSession;
 use App\Models\Livraison;
 use App\Models\Abonnement;
 use Illuminate\Support\Str;
+use App\Models\AnnoncePrestation;
 
 class AnnonceController extends Controller
 {
@@ -122,5 +123,20 @@ class AnnonceController extends Controller
         } else {
             return redirect()->route('annonces.index')->with('error', 'Paiement non validé.');
         }
+    }
+}
+
+// app/Http/Controllers/AnnoncePrestationController.php
+namespace App\Http\Controllers;
+
+use App\Models\AnnoncePrestation;
+use Illuminate\Http\Request;
+
+class AnnoncePrestationController extends Controller
+{
+    public function index()
+    {
+        $annonces = AnnoncePrestation::with(['prestation', 'utilisateur'])->latest()->get();
+        return view('annonces.annonce_prestation', compact('annonces'));
     }
 }

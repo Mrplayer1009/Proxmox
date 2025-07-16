@@ -105,6 +105,7 @@ Route::get('/base', function () {
 
 Route::get('/commerces', [App\Http\Controllers\CommercantController::class, 'index'])->name('commerces.index');
 Route::get('/annonces', [App\Http\Controllers\ClientController::class, 'annoncesGlobales'])->name('annonces.index');
+Route::get('/annonces/prestations', [App\Http\Controllers\AnnoncePrestationController::class, 'index'])->name('annonces.prestations');
 Route::get('/livraisons', [App\Http\Controllers\LivreurController::class, 'mesLivraisons'])->name('livraisons.index');
 Route::get('/commerces/{id}/produits', [App\Http\Controllers\CommercantController::class, 'produitsCommerce'])->name('commerces.produits');
 
@@ -142,3 +143,12 @@ Route::get('/client/abonnement/paiement/success', [App\Http\Controllers\ClientAb
 
 Route::get('/livreur/livraisons/prendre', [App\Http\Controllers\LivreurController::class, 'prendreLivraisons'])->name('livreur.deliveries.prendre_liste');
 Route::post('/livreur/livraisons/{id}/prendre', [App\Http\Controllers\LivreurController::class, 'prendreLivraison'])->name('livreur.deliveries.prendre');
+
+// Création d'annonce prestation par le prestataire
+Route::get('/prestataire/annonce-prestation/create', [App\Http\Controllers\AnnoncePrestationController::class, 'create'])->name('prestataire.annonce_prestation.create');
+Route::post('/prestataire/annonce-prestation', [App\Http\Controllers\AnnoncePrestationController::class, 'store'])->name('prestataire.annonce_prestation.store');
+
+// Prendre une annonce prestation
+Route::get('/annonces/prestations/{id}/prendre', [App\Http\Controllers\AnnoncePrestationController::class, 'prendre'])->name('annonces.prestations.prendre');
+Route::post('/annonces/prestations/{id}/payer', [App\Http\Controllers\AnnoncePrestationController::class, 'payer'])->name('annonces.prestations.payer');
+Route::get('/annonces/prestations/{reservation}/success', [App\Http\Controllers\AnnoncePrestationController::class, 'success'])->name('annonces.prestations.success');

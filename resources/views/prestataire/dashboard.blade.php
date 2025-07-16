@@ -49,6 +49,12 @@
             <p>À la fin de chaque mois, une facture automatique est générée, récapitulant toutes vos prestations et vos gains. Elle est archivée et accessible à tout moment.</p>
             <a href="{{ route('prestataire.factures') }}" class="btn btn-outline-primary btn-sm">Voir mes factures</a>
         </div>
+        <hr>
+        <div class="mt-4">
+            <h4>Publier une annonce prestation</h4>
+            <p>Proposez une nouvelle prestation à la communauté EcoDeli.</p>
+            <a href="{{ route('prestataire.annonce_prestation.create') }}" class="btn btn-outline-success btn-sm">Créer une annonce prestation</a>
+        </div>
     </div>
 @elseif(isset($prestataire) && $prestataire && empty($prestataire->piece_justificative))
     <div class="container mx-auto max-w-lg py-12">
@@ -120,6 +126,12 @@ $prestataire) && $prestataire)
                 <h4>Facturation mensuelle</h4>
                 <p>À la fin de chaque mois, une facture automatique est générée, récapitulant toutes vos prestations et vos gains. Elle est archivée et accessible à tout moment.</p>
                 <a href="{{ route('prestataire.factures') }}" class="btn btn-outline-primary btn-sm">Voir mes factures</a>
+            </div>
+            <hr>
+            <div class="mt-4">
+                <h4>Publier une annonce prestation</h4>
+                <p>Proposez une nouvelle prestation à la communauté EcoDeli.</p>
+                <a href="{{ route('prestataire.annonce_prestation.create') }}" class="btn btn-outline-success btn-sm">Créer une annonce prestation</a>
             </div>
         @else
             <div class="mt-3">

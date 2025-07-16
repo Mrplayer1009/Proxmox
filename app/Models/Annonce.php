@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Annonce extends Model
 {
+    use HasFactory;
     protected $table = 'annonce';
     protected $primaryKey = 'id_annonce';
     public $timestamps = false;
@@ -25,6 +27,6 @@ class Annonce extends Model
 
     public function utilisateur()
     {
-        return $this->belongsTo(Utilisateur::class, 'id_utilisateur');
+        return $this->belongsTo(Utilisateur::class, 'id_utilisateur', 'id_utilisateur');
     }
 } 

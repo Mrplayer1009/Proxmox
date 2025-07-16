@@ -19,6 +19,8 @@
                         <a href="{{ route('client.dashboard') }}" class="text-gray-700 hover:text-orange-600 font-semibold">Espace Client</a>
                         <a href="{{ route('client.annonces') }}" class="text-gray-700 hover:text-orange-600">Mes Annonces</a>
                         <li><a href="{{ route('panier.afficher') }}" class="text-gray-700 hover:text-orange-600 font-semibold">Mon panier</a></li>
+                        <li><a href="{{ route('annonces.index') }}" class="block px-4 py-2 hover:bg-gray-100">Annonces</a></li>
+                        <li><a href="{{ route('annonces.prestations') }}" class="block px-4 py-2 hover:bg-gray-100">Annonces prestation</a></li>
                     @elseif($user->type_utilisateur === 'livreur')
                         <a href="{{ route('livreur.dashboard') }}" class="text-gray-700 hover:text-orange-600 font-semibold">Espace Livreur</a>
                         <a href="{{ route('client.dashboard') }}" class="text-gray-700 hover:text-orange-600 font-semibold">Espace Utilisateur</a>
