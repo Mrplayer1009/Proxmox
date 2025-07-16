@@ -159,3 +159,10 @@ Route::post('/client/reservation/{id}/annuler', [App\Http\Controllers\ClientCont
 Route::post('/client/reservation/{id}/valider', [App\Http\Controllers\ClientController::class, 'validerReservation'])->name('client.reservation.valider');
 Route::get('/client/reservation/{id}/noter', [App\Http\Controllers\ClientController::class, 'noterReservationForm'])->name('client.reservation.noter');
 Route::post('/client/reservation/{id}/noter', [App\Http\Controllers\ClientController::class, 'noterReservation'])->name('client.reservation.noter.submit');
+
+// Changement de statut utilisateur par l'admin
+Route::post('/admin/utilisateur/{id}/statut', [App\Http\Controllers\AdminController::class, 'updateStatutUtilisateur'])->name('admin.utilisateur.statut');
+
+// Admin : gestion commerçants et approbation contrats
+Route::get('/admin/commercants', [App\Http\Controllers\AdminController::class, 'commercants'])->name('admin.commercants');
+Route::post('/admin/contrat/{id}/approuver', [App\Http\Controllers\AdminController::class, 'approuverContrat'])->name('admin.contrat.approuver');

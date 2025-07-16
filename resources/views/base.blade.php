@@ -72,18 +72,13 @@
             <span class="text-gray-500">Connecté en tant que :</span>
             <span class="font-semibold text-orange-600">{{ $user->prenom ?? '' }} {{ $user->nom ?? '' }}</span>
         </div>
-        @if($user && $user->type_utilisateur === 'admin')
-            <div class="mt-6 text-center">
-                <a href="{{ route('admin.stripe') }}" class="inline-block bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition">Paiements Stripe (Admin)</a>
-            </div>
-        @endif
         <div class="mt-8 text-center">
             <a href="{{ route('client.abonnement') }}" class="inline-block bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-600 transition">Souhaitez-vous vous abonner&nbsp;?</a>
         </div>
         <div class="mt-8 text-center">
-        <li><a href="{{ route('commerces.index') }}" class="text-gray-700 hover:text-orange-600 font-semibold">Commerces</a></li>
-                <li><a href="{{ route('annonces.index') }}" class="text-gray-700 hover:text-orange-600 font-semibold">Annonces</a></li>
-                <li><a href="{{ route('livraisons.index') }}" class="text-gray-700 hover:text-orange-600 font-semibold">Livraisons</a></li>
+        <li><a href="{{ route('commerces.index') }}" class="text-gray-700 hover:text-orange-600 font-semibold">Voir les Commerces</a></li>
+                <li><a href="{{ route('annonces.index') }}" class="text-gray-700 hover:text-orange-600 font-semibold">Voir les Annonces</a></li>
+                <li><a href="{{ route('livraisons.index') }}" class="text-gray-700 hover:text-orange-600 font-semibold">Vos Livraisons</a></li>
             </div>
     </main>
 </body>

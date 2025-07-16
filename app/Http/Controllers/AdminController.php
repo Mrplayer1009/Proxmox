@@ -122,4 +122,47 @@ class AdminController extends Controller
         $batiment->delete();
         return redirect()->route('admin.batiments')->with('success', 'Bâtiment supprimé !');
     }
+
+    public function updateStatutUtilisateur(Request $request, $id)
+    {
+        $request->validate([
+            'statut_compte' => 'required|in:actif,inactif,suspendu',
+        ]);
+        $utilisateur = \App\Models\Utilisateur::findOrFail($id);
+        $utilisateur->statut_compte = $request->statut_compte;
+        $utilisateur->save();
+        return back()->with('success', 'Statut du compte mis à jour.');
+    }
+
+    public function all(Request $request)
+    {
+        $query = \App\Models\Utilisateur::query();
+        if ($search = $request->input('search')) {
+            $query->where(function($q) use ($search) {
+                $q->where('id_utilisateur', $search)
+                  ->orWhere('nom', 'like', "%$search%")
+                  ->orWhere('prenom', 'like', "%$search%")
+                  ->orWhere('email', 'like', "%$search%");
+            });
+        }
+        $utilisateurs = $query->get();
+        $annonces = \App\Models\Annonce::all();
+        $paiements = \App\Models\Paiement::all();
+        $livraisons = \App\Models\Livraison::all();
+        return view('admin.all', compact('utilisateurs', 'annonces', 'paiements', 'livraisons'));
+    }
+
+    public function commercants()
+    {
+        $commercants = \App\Models\Commercant::with('contrats')->get();
+        return view('admin.commercants', compact('commercants'));
+    }
+
+    public function approuverContrat($id)
+    {
+        $contrat = \App\Models\Contrat::findOrFail($id);
+        $contrat->statut = 'approuvé';
+        $contrat->save();
+        return back()->with('success', 'Contrat approuvé.');
+    }
 } 

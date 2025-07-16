@@ -149,23 +149,23 @@ class CommercantController extends Controller
         return redirect()->route('commercant.dashboard')->with('success', 'Entreprise enregistrée. Veuillez créer un contrat.');
     }
 
-    public function storeContrat(Request $request, $id)
+    public function storeContrat(Request $request, $id_commercant)
     {
         $request->validate([
             'date_debut' => 'required|date',
-            'date_fin' => 'nullable|date|after_or_equal:date_debut',
-            'fichier_pdf' => 'nullable|file|mimes:pdf|max:4096',
+            'date_fin' => 'nullable|date',
+            'fichier_pdf' => 'nullable|file|mimes:pdf',
         ]);
         $contrat = new \App\Models\Contrat();
-        $contrat->id_commercant = $id;
+        $contrat->id_commercant = $id_commercant;
         $contrat->date_debut = $request->date_debut;
         $contrat->date_fin = $request->date_fin;
-        $contrat->statut = 'actif';
+        $contrat->statut = 'inactif';
         if ($request->hasFile('fichier_pdf')) {
             $path = $request->file('fichier_pdf')->store('contrats', 'public');
             $contrat->fichier_pdf = $path;
         }
         $contrat->save();
-        return redirect()->route('commercant.dashboard')->with('success', 'Contrat créé avec succès.');
+        return redirect()->route('commercant.dashboard')->with('success', 'Contrat créé et en attente d\'approbation.');
     }
 }

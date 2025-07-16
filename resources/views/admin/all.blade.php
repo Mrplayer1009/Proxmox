@@ -12,7 +12,10 @@
                     <a class="nav-link" href="{{ route('admin.prestataires') }}">Prestataires</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.livreurs.validation') }}">Validation Livreurs</a>
+                    <a class="nav-link" href="{{ route('admin.livreurs.validation') }}">Livreurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.commercants') }}">Commerçants</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.batiments') }}">Bâtiments</a>
@@ -24,6 +27,10 @@
 <div class="container">
     <h2>Administration - Toutes les données</h2>
     <h3>Utilisateurs</h3>
+    <form method="GET" action="" class="mb-3">
+        <input type="text" name="search" value="{{ request('search') }}" placeholder="Recherche" class="form-control d-inline-block w-auto" style="width:300px;">
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    </form>
     <table style="width:100%;margin-bottom:2rem;">
         <tr>
             <th>ID</th><th>Nom</th><th>Prénom</th><th>Email</th><th>Type</th><th>Statut</th>
@@ -35,7 +42,17 @@
             <td>{{ $u->prenom }}</td>
             <td>{{ $u->email }}</td>
             <td>{{ $u->type_utilisateur }}</td>
-            <td>{{ $u->statut_compte }}</td>
+            <td>
+                {{ $u->statut_compte }}
+                <form action="{{ route('admin.utilisateur.statut', $u->id_utilisateur) }}" method="POST" style="display:inline-block;margin-left:10px;">
+                    @csrf
+                    <select name="statut_compte" onchange="this.form.submit()">
+                        <option value="actif" {{ $u->statut_compte == 'actif' ? 'selected' : '' }}>Actif</option>
+                        <option value="inactif" {{ $u->statut_compte == 'inactif' ? 'selected' : '' }}>Inactif</option>
+                        <option value="suspendu" {{ $u->statut_compte == 'suspendu' ? 'selected' : '' }}>Suspendu</option>
+                    </select>
+                </form>
+            </td>
         </tr>
         @endforeach
     </table>

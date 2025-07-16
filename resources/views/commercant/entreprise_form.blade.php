@@ -16,10 +16,7 @@
             <label for="telephone" class="block font-semibold mb-1">Téléphone</label>
             <input type="text" name="telephone" id="telephone" class="form-control w-full">
         </div>
-        <div class="mb-4">
-            <label for="adresse" class="block font-semibold mb-1">Adresse</label>
-            <input type="text" name="adresse" id="adresse" class="form-control w-full">
-        </div>
+        <input type="hidden" name="id_addresse" value="{{ Auth::user()->id_addresse ?? '' }}">
         <button type="submit" class="bg-orange-600 text-white px-6 py-2 rounded hover:bg-orange-700 transition">Enregistrer</button>
     </form>
 </div>

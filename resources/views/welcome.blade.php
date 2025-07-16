@@ -20,7 +20,7 @@
             <img src="https://cdn-icons-png.flaticon.com/512/2909/2909765.png" alt="Logo Ecodeli" width="90" />
         </div>
         <h1>Bienvenue sur Ecodeli</h1>
-        <p>Coucou</p>
+        <p>Ici soyez ecologique et collaborer avec d'autres personne</p>
         <a href="{{ route('login') }}" class="button">Se connecter</a>
         <a href="{{ route('register') }}" class="button">Créer un compte</a>
     </div>
