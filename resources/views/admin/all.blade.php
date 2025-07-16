@@ -28,7 +28,7 @@
     <h2>Administration - Toutes les données</h2>
     <h3>Utilisateurs</h3>
     <form method="GET" action="" class="mb-3">
-        <input type="text" name="search" value="{{ request('search') }}" placeholder="Recherche" class="form-control d-inline-block w-auto" style="width:300px;">
+        <input type="text" name="search" value="{{ request('search') }}" placeholder="Recherche par nom, id, prénom ou mail" class="form-control d-inline-block w-auto" style="width:300px;">
         <button type="submit" class="btn btn-primary">Rechercher</button>
     </form>
     <table style="width:100%;margin-bottom:2rem;">

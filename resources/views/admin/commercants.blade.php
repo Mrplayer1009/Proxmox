@@ -29,6 +29,9 @@
                                                 <button type="submit" class="btn btn-success btn-sm">Approuver</button>
                                             </form>
                                         @endif
+                                        @if($contrat->fichier_pdf)
+                                            <a href="{{ asset('storage/' . $contrat->fichier_pdf) }}" target="_blank" class="btn btn-info btn-sm ml-2">Voir</a>
+                                        @endif
                                     </li>
                                 @endforeach
                             </ul>

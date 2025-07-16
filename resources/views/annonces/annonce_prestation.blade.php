@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+@include('layouts.navbar')
 @include('annonces.navbar')
 <div class="container mx-auto py-8">
     <h2 class="text-2xl font-bold mb-6">Toutes les annonces prestation</h2>

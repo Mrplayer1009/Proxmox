@@ -56,14 +56,21 @@ class AnnoncePrestationController extends Controller
         ]);
         $user = auth()->user();
 
+        if (empty($user->adresse)) {
+            dd($user->adresse, $user->toArray());
+            return back()->with('error', 'Vous devez renseigner une adresse dans votre profil pour réserver une prestation.');
+        }
+
         // Calcul heure_debut et heure_fin (heure_debut = 09:00, heure_fin = heure_debut + nb heures)
         $heureDebut = '09:00:00';
         $heureFin = date('H:i:s', strtotime($heureDebut . ' + ' . $request->heures . ' hours'));
 
         // Création de la réservation
         $reservation = new \App\Models\Reservation();
-        $reservation->id_prestation = $annonce->id_annonce_prestation;
+        $reservation->id_prestataire = $annonce->id_prestataire;
         $reservation->id_client = $user->id_utilisateur ?? $user->id;
+        $reservation->id_addresse = $user->adresse ?? null;
+        $reservation->titre = $annonce->titre;
         $reservation->date = $request->date;
         $reservation->heure_debut = $heureDebut;
         $reservation->heure_fin = $heureFin;

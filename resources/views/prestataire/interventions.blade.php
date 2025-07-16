@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+@include('layouts.navbar')
 <div class="container">
     <h2>Gestion de mes interventions</h2>
     @if($interventions->isEmpty())
@@ -11,7 +12,7 @@
                     <span>
                         <strong>{{ \Carbon\Carbon::parse($intervention->date)->format('d/m/Y') }}</strong>
                         à {{ substr($intervention->heure_debut, 0, 5) }}
-                        — {{ $intervention->prestation->nom ?? 'Prestation inconnue' }}
+                        — {{ $intervention->titre ?? 'Prestation inconnue' }}
                         @if($intervention->statut === 'annulée')
                             <span class="badge bg-danger ms-2">Annulée</span>
                         @endif
@@ -34,8 +35,12 @@
                   <div class="modal-body">
                     <p><strong>Date :</strong> {{ \Carbon\Carbon::parse($intervention->date)->format('d/m/Y') }}</p>
                     <p><strong>Heure :</strong> {{ substr($intervention->heure_debut, 0, 5) }} - {{ substr($intervention->heure_fin, 0, 5) }}</p>
-                    <p><strong>Prestation :</strong> {{ $intervention->prestation->nom ?? 'Prestation inconnue' }}</p>
+                    <p><strong>Prestation :</strong> {{ $intervention->titre ?? 'Prestation inconnue' }}</p>
                     <p><strong>Client :</strong> {{ $intervention->client->nom ?? 'Client inconnu' }}</p>
+                    @php $adresse = $intervention->id_addresse ? \App\Models\Addresse::find($intervention->id_addresse) : null; @endphp
+                    @if($adresse)
+                        <p><strong>Adresse :</strong> {{ $adresse->ville }}, {{ $adresse->rue }}, {{ $adresse->code_postal }}</p>
+                    @endif
                     <p><strong>Statut :</strong> {{ ucfirst($intervention->statut) }}</p>
                     <p><strong>Créée le :</strong> {{ $intervention->created_at ? $intervention->created_at->format('d/m/Y H:i') : '-' }}</p>
                   </div>

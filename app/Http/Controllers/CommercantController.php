@@ -153,7 +153,7 @@ class CommercantController extends Controller
     {
         $request->validate([
             'date_debut' => 'required|date',
-            'date_fin' => 'nullable|date',
+            'date_fin' => 'nullable|date|after_or_equal:date_debut',
             'fichier_pdf' => 'nullable|file|mimes:pdf',
         ]);
         $contrat = new \App\Models\Contrat();

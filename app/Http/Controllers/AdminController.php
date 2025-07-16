@@ -161,8 +161,8 @@ class AdminController extends Controller
     public function approuverContrat($id)
     {
         $contrat = \App\Models\Contrat::findOrFail($id);
-        $contrat->statut = 'approuvé';
+        $contrat->statut = 'actif';
         $contrat->save();
-        return back()->with('success', 'Contrat approuvé.');
+        return back()->with('success', 'Contrat activé.');
     }
 } 

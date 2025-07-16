@@ -63,12 +63,13 @@ class PrestataireController extends Controller
 
     public function interventions()
     {
-        $userId = Auth::id();
+        $userId = auth()->id();
         $prestataire = \App\Models\Prestataire::where('id_utilisateur', $userId)->first();
         $interventions = collect();
         if ($prestataire) {
-            $prestations = \App\Models\Prestation::where('id_prestataire', $prestataire->id_prestataire)->pluck('id_prestation');
-            $interventions = \App\Models\Reservation::whereIn('id_prestation', $prestations)->with(['prestation', 'client'])->orderBy('date', 'desc')->get();
+            $interventions = \App\Models\Reservation::where('id_prestataire', $prestataire->id_prestataire)
+                ->orderBy('date', 'desc')
+                ->get();
         }
         return view('prestataire.interventions', compact('interventions'));
     }
