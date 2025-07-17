@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : mer. 16 juil. 2025 à 21:04
+-- Généré le : jeu. 17 juil. 2025 à 06:01
 -- Version du serveur : 5.7.24
 -- Version de PHP : 8.1.0
 
@@ -69,9 +69,9 @@ CREATE TABLE `addresse` (
 --
 
 INSERT INTO `addresse` (`id`, `rue`, `ville`, `code_postal`, `created_at`, `updated_at`) VALUES
-(1, 'Les fromagers', 'Paris', '75001', '2025-07-14 12:25:07', '2025-07-14 12:25:07'),
+(1, 'les fromagers', 'Paris', '75001', '2025-07-14 12:25:07', '2025-07-17 03:38:07'),
 (2, 'Les marseillais', 'Marseille', '13055', '2025-07-14 12:26:51', '2025-07-14 12:26:51'),
-(3, '8 boulevard Haussmann', 'Paris', '75009', NULL, NULL),
+(3, '8 boulevard Haussmann', 'Paris', '75005', NULL, '2025-07-17 03:29:19'),
 (4, '23 rue Sainte-Catherine', 'Bordeaux', '33000', NULL, NULL),
 (5, '17 rue Nationale', 'Lille', '59000', NULL, NULL),
 (6, '10 chemin des Acacias', 'Toulouse', '31000', NULL, NULL),
@@ -310,7 +310,7 @@ INSERT INTO `langue` (`id_langue`, `code_langue`, `nom_langue`, `activee`) VALUE
 
 CREATE TABLE `livraison` (
   `id_livraison` bigint(20) UNSIGNED NOT NULL,
-  `id_annonce` bigint(20) UNSIGNED NOT NULL,
+  `id_annonce` bigint(20) UNSIGNED DEFAULT NULL,
   `id_livreur` bigint(20) UNSIGNED DEFAULT NULL,
   `id_utilisateur` bigint(20) UNSIGNED NOT NULL,
   `id_adresse_depart` bigint(20) UNSIGNED NOT NULL,
@@ -388,7 +388,10 @@ INSERT INTO `localisations` (`id_localisation`, `livraison_id`, `id_adresse`, `n
 (2, 2, NULL, 'Entrepot Paris', 1, '2025-07-15 10:16:15', '2025-07-15 10:16:15'),
 (3, 2, NULL, 'Entrepot Paris', 2, '2025-07-15 10:18:21', '2025-07-15 10:18:21'),
 (4, 2, NULL, 'Entrepot Paris', 3, '2025-07-15 11:46:16', '2025-07-15 11:46:16'),
-(5, 4, NULL, 'Entrepot Marseille', 0, '2025-07-16 13:33:31', '2025-07-16 13:33:31');
+(5, 4, NULL, 'Entrepot Marseille', 0, '2025-07-16 13:33:31', '2025-07-16 13:33:31'),
+(6, 5, NULL, 'Entrepot Paris', 0, '2025-07-17 05:21:58', '2025-07-17 05:21:58'),
+(7, 5, NULL, 'Entrepot Paris', 1, '2025-07-17 05:24:42', '2025-07-17 05:24:42'),
+(8, 5, NULL, 'Entrepot Paris', 2, '2025-07-17 05:26:13', '2025-07-17 05:26:13');
 
 -- --------------------------------------------------------
 
@@ -701,7 +704,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('P0QSAC7faoQ3wIn098jbW9KcPK2kGJ5NVcbLsyk7', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 OPR/119.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiOVRKRjhmSkk4M0p0ZFBVN1BOUE5zVnR6YXp5TXdOUDhRN2xoSmJ4biI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9wcmVzdGF0YWlyZS9pbnRlcnZlbnRpb25zIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Mzt9', 1752699744);
+('P0QSAC7faoQ3wIn098jbW9KcPK2kGJ5NVcbLsyk7', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 OPR/119.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiOVRKRjhmSkk4M0p0ZFBVN1BOUE5zVnR6YXp5TXdOUDhRN2xoSmJ4biI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9wcmVzdGF0YWlyZS9pbnRlcnZlbnRpb25zIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Mzt9', 1752699744),
+('QG7cxWAJmPvJEfDudCsG93939iyzQKQl7faFIgX0', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 OPR/119.0.0.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiN1VnRGxaZXp1cU1Qam0yVTJWY2kwNktaQThCUHZ5a0VNNkNOSEhEMyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9wYW5pZXIvc3RyaXBlIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MztzOjY6InBhbmllciI7YToyOntpOjY7YTo0OntzOjI6ImlkIjtpOjY7czozOiJub20iO3M6NzoiQ2Fyb3R0ZSI7czo0OiJwcml4IjtzOjQ6IjIuMDAiO3M6ODoicXVhbnRpdGUiO2k6MTt9aToyO2E6NDp7czoyOiJpZCI7aToyO3M6Mzoibm9tIjtzOjE3OiJHb3VyZGUgaW5veCA3NTBtbCI7czo0OiJwcml4IjtzOjU6IjI0LjkwIjtzOjg6InF1YW50aXRlIjtpOjE7fX19', 1752731790);
 
 -- --------------------------------------------------------
 
@@ -730,7 +734,7 @@ CREATE TABLE `utilisateur` (
 INSERT INTO `utilisateur` (`id_utilisateur`, `nom`, `prenom`, `email`, `password`, `telephone`, `adresse`, `type_utilisateur`, `statut_compte`, `date_inscription`, `remember_token`) VALUES
 (1, 'Admin', 'System', 'admin@ecodeli.com', '$2y$12$I.D4wey.oO99i9iwcn6/feBpJxv8acaUMJuALEFSaJLFTlfMqCKHC', NULL, 5, 'commercant', 'actif', '2025-05-15 05:58:45', NULL),
 (2, 'Raoult', 'Loïc', 'loicraoult31@gmail.com', '$2y$12$z6ovCbXpy049O/7ltAl7AOT9RIPyzVmSbeC5mT3CUAIdn33yO7ydG', NULL, 4, 'client', 'actif', '2025-05-15 06:57:19', NULL),
-(3, 'Silva-Raoult', 'Loïc', 'loicraoult1009@gmail.com', '$2y$12$yCxKjacn7FaHqRSdjbEuYe4wIefRw.OI01h6i5/hdATiMpYrub5ue', '0770256895', 3, 'admin', 'actif', '2025-06-26 08:00:27', NULL),
+(3, 'Silva-Raoult', 'Loïc', 'loicraoult1009@gmail.com', '$2y$12$yCxKjacn7FaHqRSdjbEuYe4wIefRw.OI01h6i5/hdATiMpYrub5ue', '0770256896', 3, 'admin', 'actif', '2025-06-26 08:00:27', NULL),
 (4, 'Silva-Raoult', 'Loïc', 'test@gmail.com', '$2y$12$TyWp4KzUmLMmxTe2.VxD2ecGPgajbZY79xVeYhnqAou54F/QqLXL2', '0770256895', 4, 'admin', 'actif', NULL, NULL),
 (5, 'Silva-Raoult', 'Loïc', 'nimp@mal.com', '$2y$12$LoH1b3NOBYnakAZT0kxTuuc81.V70/.qP6qHnGumFre3F6VpkBbZK', '0770256895', 5, 'client', 'actif', NULL, NULL),
 (6, 'livreur', 'll', 'liv@liv.liv', '$2y$12$meRsPg9rIkHFcBGrdlfw9.fLG2QlY21fb8tvHBRceU.jx/lPgJT56', '0770256895', 6, 'livreur', 'actif', NULL, NULL),
@@ -1001,7 +1005,7 @@ ALTER TABLE `livreur`
 -- AUTO_INCREMENT pour la table `localisations`
 --
 ALTER TABLE `localisations`
-  MODIFY `id_localisation` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_localisation` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `migrations`
