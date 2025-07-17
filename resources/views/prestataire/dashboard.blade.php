@@ -23,7 +23,6 @@
         <div class="mt-4">
             <h4>Suivi des évaluations</h4>
             <p>Note moyenne : <strong>{{ $noteMoyenne ? number_format($noteMoyenne, 2) : 'Aucune note' }}</strong> / 5</p>
-            <p>(Note donnée par les clients ayant utilisé vos services)</p>
         </div>
         <hr>
         <div class="mt-4">

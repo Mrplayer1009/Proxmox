@@ -20,6 +20,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.batiments') }}">Bâtiments</a>
                 </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.prestations') }}"> Voir les prestations</a>
+                </li>
             </ul>
         </div>
     </div>

@@ -165,4 +165,44 @@ class AdminController extends Controller
         $contrat->save();
         return back()->with('success', 'Contrat activé.');
     }
+
+    public function editBatimentAdresse($id)
+    {
+        $batiment = \App\Models\Batiment::with('addresse')->findOrFail($id);
+        return view('admin.edit_batiment_adresse', compact('batiment'));
+    }
+
+    public function updateBatimentAdresse(Request $request, $id)
+    {
+        $request->validate([
+            'rue' => 'required|string|max:255',
+            'ville' => 'required|string|max:255',
+            'code_postal' => 'required|string|max:20',
+        ]);
+        $batiment = \App\Models\Batiment::with('addresse')->findOrFail($id);
+        $batiment->addresse->update([
+            'rue' => $request->rue,
+            'ville' => $request->ville,
+            'code_postal' => $request->code_postal,
+        ]);
+        return redirect()->route('admin.batiments')->with('success', 'Adresse du bâtiment modifiée !');
+    }
+
+    public function prestations()
+    {
+        $reservations = \App\Models\Reservation::with(['prestation', 'client'])->latest()->get();
+        $prestataires = \App\Models\Prestataire::with('utilisateur')->get();
+        return view('admin.prestations', compact('reservations', 'prestataires'));
+    }
+
+    public function prestatairePrestations($id)
+    {
+        $prestataire = \App\Models\Prestataire::with('utilisateur')->findOrFail($id);
+        $reservations = \App\Models\Reservation::where('id_prestataire', $id)->with(['client'])->latest()->get();
+        $annonces_prestation = \App\Models\AnnoncePrestation::where('id_prestataire', $id)->get();
+        // Notes et commentaires sur les réservations
+        $notes = $reservations->pluck('note')->filter();
+        $commentaires = $reservations->pluck('commentaire')->filter();
+        return view('admin.prestataire_prestations', compact('prestataire', 'reservations', 'annonces_prestation', 'notes', 'commentaires'));
+    }
 } 

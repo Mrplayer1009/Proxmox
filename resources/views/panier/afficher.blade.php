@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<script src="https://cdn.tailwindcss.com"></script>
 <div class="container mx-auto py-8">
     <h2 class="text-2xl font-bold mb-6">Mon panier</h2>
     @if(session('success'))

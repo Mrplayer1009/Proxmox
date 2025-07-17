@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@include('layouts.admin')
 @section('content')
 <div class="container mx-auto py-8 max-w-md">
     <h2 class="text-2xl font-bold mb-6">Enregistrer un bâtiment</h2>

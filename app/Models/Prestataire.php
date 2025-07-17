@@ -22,4 +22,9 @@ class Prestataire extends Model
     {
         return $this->hasMany(Evaluation::class, 'id_prestataire', 'id_prestataire');
     }
+
+    public function utilisateur()
+    {
+        return $this->belongsTo(Utilisateur::class, 'id_utilisateur', 'id_utilisateur');
+    }
 } 

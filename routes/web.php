@@ -27,6 +27,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/client/paiements', [App\Http\Controllers\ClientController::class, 'paiements'])->name('client.paiements');
     Route::delete('/client/annonces/{id}', [App\Http\Controllers\ClientController::class, 'destroyAnnonce'])->name('client.annonces.destroy');
     Route::post('/client/annonces/{id}/changer-stock', [App\Http\Controllers\ClientController::class, 'changerStock'])->name('client.annonces.changer_stock');
+    Route::get('/client/profil', [App\Http\Controllers\ClientController::class, 'profil'])->name('client.profil');
+    Route::post('/client/profil', [App\Http\Controllers\ClientController::class, 'updateProfil'])->name('client.profil.update');
 
     // Espace livreur
     Route::get('/livreur/dashboard', [App\Http\Controllers\LivreurController::class, 'dashboard'])->name('livreur.dashboard');
@@ -88,6 +90,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/batiment/{id}/edit', [App\Http\Controllers\AdminController::class, 'editBatiment'])->name('admin.batiment.edit');
     Route::post('/admin/batiment/{id}/edit', [App\Http\Controllers\AdminController::class, 'updateBatiment'])->name('admin.batiment.update');
     Route::post('/admin/batiment/{id}/delete', [App\Http\Controllers\AdminController::class, 'deleteBatiment'])->name('admin.batiment.delete');
+    Route::get('/admin/batiment/{id}/edit-adresse', [App\Http\Controllers\AdminController::class, 'editBatimentAdresse'])->name('admin.batiment.edit_adresse');
+    Route::post('/admin/batiment/{id}/edit-adresse', [App\Http\Controllers\AdminController::class, 'updateBatimentAdresse'])->name('admin.batiment.update_adresse');
 
     // Abonnement client
     Route::get('/client/abonnement', [ClientAbonnementController::class, 'show'])->name('client.abonnement.show');
@@ -166,3 +170,6 @@ Route::post('/admin/utilisateur/{id}/statut', [App\Http\Controllers\AdminControl
 // Admin : gestion commerçants et approbation contrats
 Route::get('/admin/commercants', [App\Http\Controllers\AdminController::class, 'commercants'])->name('admin.commercants');
 Route::post('/admin/contrat/{id}/approuver', [App\Http\Controllers\AdminController::class, 'approuverContrat'])->name('admin.contrat.approuver');
+
+    Route::get('/admin/prestations', [App\Http\Controllers\AdminController::class, 'prestations'])->name('admin.prestations');
+    Route::get('/admin/prestataire/{id}/prestations', [App\Http\Controllers\AdminController::class, 'prestatairePrestations'])->name('admin.prestataire.prestations');

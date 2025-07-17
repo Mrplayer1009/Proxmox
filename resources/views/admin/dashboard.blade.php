@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@include('layouts.admin')
 @section('content')
 <div class="container">
     <h2>Dashboard Admin</h2>

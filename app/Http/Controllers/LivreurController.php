@@ -260,7 +260,7 @@ class LivreurController extends Controller
         $livraison->id_livreur = null;
         $livraison->save();
 
-        return redirect()->route('livreur.deliveries.index')
+        return redirect()->route('livreur.deliveries')
             ->with('success', 'Localisation ajoutée, livraison remise en attente.');
     }
 

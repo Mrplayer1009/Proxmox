@@ -172,4 +172,48 @@ class ClientController extends Controller
         $reservation->save();
         return redirect()->route('client.interventions')->with('success', 'Merci pour votre note !');
     }
+
+    public function profil()
+    {
+        $user = auth()->user();
+        $adresse = null;
+        if ($user->adresse) {
+            $adresse = \App\Models\Addresse::find($user->adresse);
+        }
+        return view('client.profil', compact('user', 'adresse'));
+    }
+
+    public function updateProfil(Request $request)
+    {
+        $user = auth()->user();
+        $request->validate([
+            'email' => 'required|email',
+            'telephone' => 'nullable|string|max:20',
+            'password' => 'nullable|string|min:6|confirmed',
+            'rue' => 'required|string|max:255',
+            'ville' => 'required|string|max:100',
+            'code_postal' => 'required|string|max:20',
+        ]);
+        $user->email = $request->email;
+        $user->telephone = $request->telephone;
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
+        // Gestion de l'adresse
+        if ($user->adresse) {
+            $adresse = \App\Models\Addresse::find($user->adresse);
+        } else {
+            $adresse = new \App\Models\Addresse();
+        }
+        $adresse->rue = $request->rue;
+        $adresse->ville = $request->ville;
+        $adresse->code_postal = $request->code_postal;
+        $adresse->save();
+        // Si l'utilisateur n'avait pas d'adresse, on met à jour la colonne 'adresse'
+        if (!$user->adresse) {
+            $user->adresse = $adresse->id;
+        }
+        $user->save();
+        return back()->with('success', 'Profil mis à jour !');
+    }
 } 
